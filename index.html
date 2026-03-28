@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution Holding Data Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top right, #f8fafc, #eff6ff);
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08);
+        }
+
+        .data-button {
+            background: linear-gradient(135deg, #007dba 0%, #005f8d 100%);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            min-height: 240px;
+        }
+
+        .data-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: 0.6s;
+        }
+
+        .data-button:hover::before {
+            left: 100%;
+        }
+
+        .data-button:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 30px -5px rgba(0, 125, 186, 0.35);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #1e293b 20%, #007dba 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-badge {
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 md:p-8">
+
+    <div class="w-full max-w-5xl">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-blue-100">
+                Data Management System
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold header-gradient mb-6 tracking-tight">
+                Evolution Holding Data
+            </h1>
+            <p class="text-slate-500 font-medium max-w-lg mx-auto leading-relaxed">
+                Компанийн дотоод мэдээллийн нөөц болон аналитикийг нэг дороос удирдах систем
+            </p>
+        </div>
+
+        <!-- Dashboard Panel -->
+        <div class="glass-panel rounded-[3rem] p-10 md:p-16 relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-blue-400 rounded-full opacity-10 blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
+            
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-200 text-2xl">
+                            🚀
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800">Дата бааз</h2>
+                            <p class="text-sm text-slate-400 font-medium">Сүүлийн шинэчлэлт: Өнөөдөр</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 bg-white/50 backdrop-blur px-5 py-2.5 rounded-2xl border border-white/80 shadow-sm">
+                        <span class="w-2.5 h-2.5 bg-green-500 rounded-full status-badge"></span>
+                        <span class="text-slate-600 text-sm font-bold uppercase tracking-wider">Сервер идэвхтэй</span>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Button 1: Чат бот дата -->
+                    <a href="https://docs.google.com/spreadsheets/d/1bJLi0cucLA0E3Nxm-4m6lTf1r0IImbkHYgttDRtSaBA/edit?usp=sharing" target="_blank" class="group">
+                        <div class="data-button p-10 rounded-[2.5rem] text-center h-full">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-4xl mb-6 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                🤖
+                            </div>
+                            <span class="text-white font-bold text-xl tracking-tight">Чат бот дата</span>
+                            <div class="mt-4 text-blue-100 text-xs font-semibold opacity-70 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Google Sheets ➔</div>
+                        </div>
+                    </a>
+
+                    <!-- Button 2: 8811 Зээл судлуулах хүсэлт -->
+                    <a href="https://docs.google.com/spreadsheets/d/1qizDk5CnaaMTFyfFfmRc8VXkAZLgzOfSHh8LZikDqL4/edit?usp=sharing" target="_blank" class="group">
+                        <div class="data-button p-10 rounded-[2.5rem] text-center h-full">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-4xl mb-6 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                📞
+                            </div>
+                            <span class="text-white font-bold text-xl tracking-tight leading-tight">8811 Зээл судлуулах хүсэлт</span>
+                            <div class="mt-4 text-blue-100 text-xs font-semibold opacity-70 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Google Sheets ➔</div>
+                        </div>
+                    </a>
+
+                    <!-- Button 3: Автомашин зээл -->
+                    <a href="https://docs.google.com/spreadsheets/d/127CFkTKB85s1VfPiTu6Qx5iKWRnNF0DYkeie-fWbcAc/edit?usp=sharing" target="_blank" class="group">
+                        <div class="data-button p-10 rounded-[2.5rem] text-center h-full">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-4xl mb-6 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                🚘
+                            </div>
+                            <span class="text-white font-bold text-xl tracking-tight">Автомашин зээл</span>
+                            <div class="mt-4 text-blue-100 text-xs font-semibold opacity-70 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Google Sheets ➔</div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="mt-12 flex flex-col md:flex-row items-center justify-between text-slate-400 text-sm font-medium px-6 gap-4">
+            <div class="flex items-center space-x-6">
+                <a href="#" class="hover:text-blue-600 transition-colors">Тусламж</a>
+                <a href="#" class="hover:text-blue-600 transition-colors">Аюулгүй байдал</a>
+            </div>
+            <p>Evolution Holding. Бүх эрх хуулиар хамгаалагдсан.</p>
+        </div>
+    </div>
+
+</body>
+</html>
