@@ -47,7 +47,11 @@ async function loginToPbxuc(username, password) {
 
   const res = await fetch(`${BASE_URL}/index.php/site/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Referer': `${BASE_URL}/index.php/0/site/login`,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    },
     body: body.toString(),
     redirect: 'manual'
   });
@@ -72,7 +76,8 @@ async function fetchExportAsJson(cookie, pageUrl, exportUrl) {
   const res = await fetch(exportUrl, {
     headers: {
       Cookie: cookie,
-      Referer: pageUrl
+      Referer: pageUrl,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
   });
 
