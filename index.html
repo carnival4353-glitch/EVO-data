@@ -6,6 +6,7 @@
 <title>Evolution Holding - Мэдээллийн Төв</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
@@ -160,6 +161,33 @@ border: 2px solid #ef4444 !important;
 <div id="detailedStatsGrid" class="grid grid-cols-1 md:grid-cols-4 gap-5">
 <!-- JS-ээр динамикаар дүүргэнэ -->
 </div>
+</div>
+
+<!-- Тайлан татах хэсэг -->
+<div class="premium-card p-8 md:p-12 mb-8" id="exportPanel">
+<h2 class="text-2xl font-black text-slate-800 tracking-tight mb-2">Тайлан татах (Excel)</h2>
+<p class="text-slate-400 font-medium text-sm mb-6">Огнооны хязгаар болон эх сурвалжаа сонгоод Excel файл татаж авна уу. Огноо хоосон орхивол бүх өгөгдөл орно.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Эхлэх огноо</label>
+<input type="date" id="filterStartDate" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+</div>
+<div>
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Дуусах огноо</label>
+<input type="date" id="filterEndDate" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+</div>
+</div>
+
+<div class="mb-6">
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Эх сурвалж сонгох</label>
+<div class="flex flex-wrap gap-3" id="sourceCheckboxes"></div>
+</div>
+
+<button id="exportBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors flex items-center gap-2 disabled:opacity-50">
+<span>📥</span> Excel татах
+</button>
+<p id="exportStatus" class="text-xs font-bold text-slate-400 mt-3"></p>
 </div>
 
 <!-- OneCall тусгай дэлгэрэнгүй хэсэг -->
@@ -455,9 +483,78 @@ document.getElementById('onecallBoth').innerText = onecallStat.direction.BOTH.to
 }
 }
 
+// ---------- Excel тайлан татах ----------
+function initExportControls() {
+const container = document.getElementById('sourceCheckboxes');
+SOURCE_CONFIG.forEach((s) => {
+const label = document.createElement('label');
+label.className = 'flex items-center gap-2 bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-xl cursor-pointer border border-slate-100 transition-colors';
+label.innerHTML = `<input type="checkbox" value="${s.id}" checked class="source-checkbox w-4 h-4 accent-blue-600"><span class="text-sm font-semibold text-slate-700">${s.icon} ${s.name}</span>`;
+container.appendChild(label);
+});
+}
+
+async function exportToExcel() {
+const btn = document.getElementById('exportBtn');
+const status = document.getElementById('exportStatus');
+const startVal = document.getElementById('filterStartDate').value;
+const endVal = document.getElementById('filterEndDate').value;
+const startDate = startVal ? new Date(startVal + 'T00:00:00') : null;
+const endDate = endVal ? new Date(endVal + 'T23:59:59') : null;
+
+const selectedIds = Array.from(document.querySelectorAll('.source-checkbox:checked')).map((cb) => cb.value);
+if (selectedIds.length === 0) {
+status.innerText = '⚠️ Дор хаяж нэг эх сурвалж сонгоно уу';
+return;
+}
+
+btn.disabled = true;
+status.innerText = 'Өгөгдөл татаж байна...';
+
+try {
+const wb = XLSX.utils.book_new();
+
+for (const id of selectedIds) {
+const source = SOURCE_CONFIG.find((s) => s.id === id);
+const response = await fetch(`${source.url}&t=${Date.now()}`);
+if (!response.ok) throw new Error(`${source.name}: HTTP ${response.status}`);
+const csvText = await response.text();
+const allRows = parseCsv(csvText);
+const header = allRows[0] || [];
+const dataRows = allRows.slice(1);
+
+let filteredRows = dataRows;
+if (startDate || endDate) {
+filteredRows = dataRows.filter((r) => {
+const d = parseDateValue(r[source.dateCol], source.dateFormat);
+if (!d) return false;
+if (startDate && d < startDate) return false;
+if (endDate && d > endDate) return false;
+return true;
+});
+}
+
+const sheetData = [header, ...filteredRows];
+const ws = XLSX.utils.aoa_to_sheet(sheetData);
+const safeName = source.name.substring(0, 31);
+XLSX.utils.book_append_sheet(wb, ws, safeName);
+}
+
+const dateStr = new Date().toISOString().slice(0, 10);
+XLSX.writeFile(wb, `Evolution_Tailan_${dateStr}.xlsx`);
+status.innerText = '✅ Амжилттай татагдлаа';
+} catch (e) {
+status.innerText = '❌ Алдаа: ' + e.message;
+} finally {
+btn.disabled = false;
+}
+}
+
 window.onload = () => {
 refreshDashboard();
 setInterval(refreshDashboard, 300000);
+initExportControls();
+document.getElementById('exportBtn').addEventListener('click', exportToExcel);
 };
 </script>
 </body>
