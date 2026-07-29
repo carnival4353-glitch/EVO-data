@@ -34,6 +34,17 @@ background: #006699;
 box-shadow: 0 15px 30px -10px rgba(0, 125, 186, 0.4);
 }
 
+.stat-card {
+background: #ffffff;
+border-radius: 1.5rem;
+border: 1px solid #f1f5f9;
+transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+box-shadow: 0 10px 25px -8px rgba(0, 125, 186, 0.15);
+}
+
 .pulse-dot {
 width: 10px;
 height: 10px;
@@ -120,7 +131,7 @@ border: 2px solid #ef4444 !important;
 </div>
 
 <!-- Үндсэн статистик самбар -->
-<div class="premium-card p-8 md:p-12" id="mainPanel">
+<div class="premium-card p-8 md:p-12 mb-8" id="mainPanel">
 <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
 <div>
 <h2 class="text-3xl font-black text-slate-800 tracking-tight mb-2">Үйл ажиллагааны статистик</h2>
@@ -143,6 +154,32 @@ border: 2px solid #ef4444 !important;
 </div>
 </div>
 
+<!-- Дэлгэрэнгүй тайлан: эх сурвалж тус бүрийн энэ сарын мэдээлэл -->
+<div class="premium-card p-8 md:p-12 mb-8">
+<h2 class="text-2xl font-black text-slate-800 tracking-tight mb-8">Дэлгэрэнгүй тайлан</h2>
+<div id="detailedStatsGrid" class="grid grid-cols-1 md:grid-cols-4 gap-5">
+<!-- JS-ээр динамикаар дүүргэнэ -->
+</div>
+</div>
+
+<!-- OneCall тусгай дэлгэрэнгүй хэсэг -->
+<div class="premium-card p-8 md:p-12" id="onecallDetailPanel">
+<h2 class="text-2xl font-black text-slate-800 tracking-tight mb-2">OneCall дуудлагын задаргаа</h2>
+<p class="text-slate-400 font-medium text-sm mb-8">Бүх цаг үеийн дуудлагын чиглэлээр</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="stat-card p-6 text-center">
+<div class="text-3xl mb-2">📥</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Ирсэн дуудлага (Inbound)</p>
+<p id="onecallInbound" class="text-3xl font-black text-blue-700">0</p>
+</div>
+<div class="stat-card p-6 text-center">
+<div class="text-3xl mb-2">🔁</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Хоёр чиглэлтэй (Both)</p>
+<p id="onecallBoth" class="text-3xl font-black text-blue-700">0</p>
+</div>
+</div>
+</div>
+
 <!-- Доод хэсэг -->
 <div class="mt-8 text-center">
 <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 Evolution Holding - Бүх эрх хуулиар хамгаалагдсан</p>
@@ -151,33 +188,111 @@ border: 2px solid #ef4444 !important;
 
 <script>
 // Google Sheets-ийн эх сурвалжууд
+// dateCol: огноо агуулсан баганы индекс (0-ээс эхэлнэ)
+// dateFormat: 'ymd_dash' = YYYY-MM-DD, 'mdy_slash' = M/D/YYYY, 'mdy_dash' = MM-DD-YYYY
+// directionCol: (зөвхөн OneCall) дуудлагын чиглэл агуулсан баганы индекс
 const SOURCE_CONFIG = [
 {
 id: 'chatbot',
 name: 'Chatbot',
-url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgJoNNkRhBjKalCwO8tyGr5Gs8Ic1H0oIpS-YbPWuOYfK8m5eLZUJnzyzcejgTREJID4-JP12KYfWz/pub?output=csv'
+icon: '🤖',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgJoNNkRhBjKalCwO8tyGr5Gs8Ic1H0oIpS-YbPWuOYfK8m5eLZUJnzyzcejgTREJID4-JP12KYfWz/pub?output=csv',
+dateCol: 1,
+dateFormat: 'ymd_dash'
 },
 {
 id: 'loan8811',
 name: '8811 Loan',
-url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1qflcTKeKv06_d25N3xbZ6p6B3mdbG_wAqemYZMhVvEA7su2D4Vek0rUgy1g5wKbs6bpgkev8smVX/pub?output=csv'
+icon: '📞',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1qflcTKeKv06_d25N3xbZ6p6B3mdbG_wAqemYZMhVvEA7su2D4Vek0rUgy1g5wKbs6bpgkev8smVX/pub?output=csv',
+dateCol: 0,
+dateFormat: 'mdy_slash'
 },
 {
 id: 'carloan',
 name: 'Auto Loan',
-url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCgVvCagIShX6K2g1VyzgTd4As0MxnK59laLkazTTamFUDgkHzesqGxK_gYyCcpB_L0W_gfFkMX5J/pub?output=csv'
+icon: '🚘',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCgVvCagIShX6K2g1VyzgTd4As0MxnK59laLkazTTamFUDgkHzesqGxK_gYyCcpB_L0W_gfFkMX5J/pub?output=csv',
+dateCol: 0,
+dateFormat: 'mdy_slash'
 },
 {
 id: 'onecall',
 name: 'OneCall',
-url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSf7ogXapqMVP8pPpidgVbGJuuSTZHqUnZQEGCoWo1bj681RxNZbfO93t2KI_918TZfx_7J_ef29xbu/pub?output=csv'
+icon: '☎️',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSf7ogXapqMVP8pPpidgVbGJuuSTZHqUnZQEGCoWo1bj681RxNZbfO93t2KI_918TZfx_7J_ef29xbu/pub?output=csv',
+dateCol: 9,
+dateFormat: 'mdy_dash',
+directionCol: 1
 }
 ];
 
 let myChart = null;
 
-// Өгөгдөл татах функц
-async function fetchSheetRows(source) {
+// ---------- CSV parser (quote-тэй мөрийг зөв уншина) ----------
+function parseCsv(text) {
+const rows = [];
+let row = [];
+let field = '';
+let inQuotes = false;
+
+for (let i = 0; i < text.length; i++) {
+const c = text[i];
+if (inQuotes) {
+if (c === '"') {
+if (text[i + 1] === '"') { field += '"'; i++; }
+else inQuotes = false;
+} else {
+field += c;
+}
+} else {
+if (c === '"') {
+inQuotes = true;
+} else if (c === ',') {
+row.push(field); field = '';
+} else if (c === '\n' || c === '\r') {
+if (c === '\r' && text[i + 1] === '\n') i++;
+row.push(field); field = '';
+if (row.length > 1 || row[0] !== '') rows.push(row);
+row = [];
+} else {
+field += c;
+}
+}
+}
+if (field !== '' || row.length) { row.push(field); rows.push(row); }
+return rows;
+}
+
+// ---------- Огноог задлах ----------
+function parseDateValue(value, format) {
+if (!value) return null;
+try {
+if (format === 'mdy_slash') {
+const d = new Date(value);
+return isNaN(d.getTime()) ? null : d;
+}
+if (format === 'ymd_dash') {
+const d = new Date(value.replace(' ', 'T'));
+return isNaN(d.getTime()) ? null : d;
+}
+if (format === 'mdy_dash') {
+const [datePart, timePart] = value.trim().split(' ');
+const parts = datePart.split('-');
+if (parts.length !== 3) return null;
+const [mm, dd, yyyy] = parts;
+const iso = `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}T${timePart || '00:00:00'}`;
+const d = new Date(iso);
+return isNaN(d.getTime()) ? null : d;
+}
+} catch (e) {
+return null;
+}
+return null;
+}
+
+// ---------- Эх сурвалж бүрийн статистикийг тооцоолох ----------
+async function fetchSheetStats(source) {
 try {
 const response = await fetch(`${source.url}&t=${Date.now()}`, {
 method: 'GET',
@@ -186,21 +301,71 @@ headers: { 'Accept': 'text/csv' }
 
 if (!response.ok) throw new Error(`Status: ${response.status}`);
 
-const csvData = await response.text();
-if (!csvData || csvData.length < 5) throw new Error("Дата алдаатай байна");
+const csvText = await response.text();
+if (!csvText || csvText.length < 5) throw new Error("Дата алдаатай байна");
 
-const rows = csvData.split(/\r?\n/).filter(row => row.trim().length > 0);
-return Math.max(0, rows.length - 1);
+const allRows = parseCsv(csvText);
+const dataRows = allRows.slice(1); // толгой мөрийг алгасна
+const total = dataRows.length;
+
+const now = new Date();
+let thisMonth = 0;
+const direction = { INBOUND: 0, OUTBOUND: 0, BOTH: 0 };
+
+dataRows.forEach((r) => {
+const dateStr = r[source.dateCol];
+const d = parseDateValue(dateStr, source.dateFormat);
+if (d && d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) {
+thisMonth++;
+}
+if (source.directionCol !== undefined) {
+const dirVal = (r[source.directionCol] || '').trim().toUpperCase();
+if (direction[dirVal] !== undefined) direction[dirVal]++;
+}
+});
+
+return { id: source.id, total, thisMonth, direction, error: null };
 } catch (e) {
 console.error(`[АЛДАА] ${source.name}:`, e.message);
-return -1;
+return { id: source.id, total: -1, thisMonth: 0, direction: { INBOUND: 0, OUTBOUND: 0, BOTH: 0 }, error: e.message };
 }
+}
+
+// ---------- Дэлгэрэнгүй тайлангийн карт үүсгэх ----------
+function renderDetailedStats(statsList) {
+const grid = document.getElementById('detailedStatsGrid');
+grid.innerHTML = '';
+
+statsList.forEach((stat) => {
+const source = SOURCE_CONFIG.find((s) => s.id === stat.id);
+const isError = stat.total === -1;
+
+const card = document.createElement('div');
+card.className = 'stat-card p-6';
+card.innerHTML = `
+<div class="flex items-center gap-2 mb-4">
+<span class="text-2xl">${source.icon}</span>
+<h4 class="font-bold text-slate-700 text-sm">${source.name}</h4>
+</div>
+<div class="space-y-3">
+<div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Нийт хүсэлт</p>
+<p class="text-2xl font-black ${isError ? 'text-red-500' : 'text-slate-800'}">${isError ? '—' : stat.total.toLocaleString()}</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Энэ сард ирсэн</p>
+<p class="text-2xl font-black ${isError ? 'text-red-500' : 'text-blue-600'}">${isError ? '—' : stat.thisMonth.toLocaleString()}</p>
+</div>
+</div>
+`;
+grid.appendChild(card);
+});
 }
 
 async function refreshDashboard() {
-const counts = await Promise.all(SOURCE_CONFIG.map(s => fetchSheetRows(s)));
+const statsList = await Promise.all(SOURCE_CONFIG.map((s) => fetchSheetStats(s)));
 
-const hasError = counts.some(c => c === -1);
+const hasError = statsList.some((s) => s.total === -1);
 const errorBox = document.getElementById('errorBox');
 const mainPanel = document.getElementById('mainPanel');
 const statusText = document.getElementById('statusText');
@@ -218,23 +383,24 @@ statusText.innerText = "Систем хэвийн ажиллаж байна";
 statusDot.style.background = "#22c55e";
 }
 
-const validCounts = counts.map(c => (c === -1 ? 0 : c));
+const validCounts = statsList.map((s) => (s.total === -1 ? 0 : s.total));
 const total = validCounts.reduce((a, b) => a + b, 0);
 
 document.getElementById('totalNumber').innerText = total.toLocaleString();
 document.getElementById('lastUpdateTime').innerText = new Date().toLocaleTimeString('mn-MN');
 
+// Үндсэн график
 const ctx = document.getElementById('mainChart').getContext('2d');
 if (myChart) myChart.destroy();
 
 myChart = new Chart(ctx, {
 type: 'bar',
 data: {
-labels: SOURCE_CONFIG.map(s => s.name),
+labels: SOURCE_CONFIG.map((s) => s.name),
 datasets: [{
 label: 'Хүсэлтийн тоо',
 data: validCounts,
-backgroundColor: counts.map(c => c === -1 ? '#ef4444' : '#007dba'),
+backgroundColor: statsList.map((s) => s.total === -1 ? '#ef4444' : '#007dba'),
 hoverBackgroundColor: '#006699',
 borderRadius: 16,
 barThickness: 'flex',
@@ -277,6 +443,16 @@ color: '#475569'
 }
 }
 });
+
+// Дэлгэрэнгүй тайлангийн картууд
+renderDetailedStats(statsList);
+
+// OneCall тусгай задаргаа
+const onecallStat = statsList.find((s) => s.id === 'onecall');
+if (onecallStat && onecallStat.total !== -1) {
+document.getElementById('onecallInbound').innerText = onecallStat.direction.INBOUND.toLocaleString();
+document.getElementById('onecallBoth').innerText = onecallStat.direction.BOTH.toLocaleString();
+}
 }
 
 window.onload = () => {
