@@ -66,7 +66,20 @@ async function loginToPbxuc(username, password) {
   }
 
   if (!cookies.length) {
-    throw new Error('Нэвтрэлт амжилтгүй: session cookie ирсэнгүй (username/password шалгана уу)');
+    // Диагностик: жинхэнэ статус болон хариултын эхний хэсгийг барьж авна
+    let bodySnippet = '';
+    try {
+      bodySnippet = (await res.text()).substring(0, 300);
+    } catch (e) {
+      bodySnippet = '(body уншиж чадсангүй: ' + e.message + ')';
+    }
+    const debugInfo = {
+      status: res.status,
+      statusText: res.statusText,
+      headers: Object.fromEntries(res.headers.entries()),
+      bodySnippet
+    };
+    throw new Error('Нэвтрэлт амжилтгүй: session cookie ирсэнгүй. DEBUG: ' + JSON.stringify(debugInfo));
   }
 
   return cookies.map((c) => c.split(';')[0]).join('; ');
