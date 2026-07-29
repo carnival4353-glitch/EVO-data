@@ -1,276 +1,288 @@
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolution Holding - Мэдээллийн Төв</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #f8fafc;
-            min-height: 100vh;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolution Holding - Мэдээллийн Төв</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
-        .premium-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
-            border: 1px solid #f1f5f9;
-        }
+body {
+font-family: 'Plus Jakarta Sans', sans-serif;
+background: #f8fafc;
+min-height: 100vh;
+}
 
-        .nav-card {
-            background: #007dba;
-            transition: all 0.3s ease;
-        }
+.premium-card {
+background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(20px);
+border-radius: 2rem;
+box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+border: 1px solid #f1f5f9;
+}
 
-        .nav-card:hover {
-            transform: translateY(-5px);
-            background: #006699;
-            box-shadow: 0 15px 30px -10px rgba(0, 125, 186, 0.4);
-        }
+.nav-card {
+background: #007dba;
+transition: all 0.3s ease;
+}
 
-        .pulse-dot {
-            width: 10px;
-            height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            position: relative;
-        }
+.nav-card:hover {
+transform: translateY(-5px);
+background: #006699;
+box-shadow: 0 15px 30px -10px rgba(0, 125, 186, 0.4);
+}
 
-        .pulse-dot::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: inherit;
-            animation: pulse-ring 2s infinite;
-        }
+.pulse-dot {
+width: 10px;
+height: 10px;
+background: #22c55e;
+border-radius: 50%;
+position: relative;
+}
 
-        @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
-        }
+.pulse-dot::after {
+content: '';
+position: absolute;
+width: 100%;
+height: 100%;
+background: inherit;
+border-radius: inherit;
+animation: pulse-ring 2s infinite;
+}
 
-        .error-shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            border: 2px solid #ef4444 !important;
-        }
+@keyframes pulse-ring {
+0% { transform: scale(1); opacity: 1; }
+100% { transform: scale(3); opacity: 0; }
+}
 
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-    </style>
+.error-shake {
+animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+border: 2px solid #ef4444 !important;
+}
+
+@keyframes shake {
+10%, 90% { transform: translate3d(-1px, 0, 0); }
+20%, 80% { transform: translate3d(2px, 0, 0); }
+30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+</style>
 </head>
 <body class="py-12 px-6">
 
-    <div class="max-w-6xl mx-auto">
-        <!-- Системийн толгой хэсэг -->
-        <div class="flex justify-between items-center mb-12">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl">🚀</div>
-                <div>
-                    <h1 class="font-extrabold text-2xl text-slate-800 tracking-tight">Evolution Holding</h1>
-                    <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">Data Management System</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4 bg-white px-5 py-2.5 rounded-full border border-slate-100 shadow-sm">
-                <div class="pulse-dot" id="statusDot"></div>
-                <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider" id="statusText">Систем хэвийн ажиллаж байна</span>
-            </div>
-        </div>
+<div class="max-w-6xl mx-auto">
+<!-- Системийн толгой хэсэг -->
+<div class="flex justify-between items-center mb-12">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl">🚀</div>
+<div>
+<h1 class="font-extrabold text-2xl text-slate-800 tracking-tight">Evolution Holding</h1>
+<p class="text-xs font-bold text-blue-600 uppercase tracking-widest">Data Management System</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white px-5 py-2.5 rounded-full border border-slate-100 shadow-sm">
+<div class="pulse-dot" id="statusDot"></div>
+<span class="text-[10px] font-black text-slate-500 uppercase tracking-wider" id="statusText">Систем хэвийн ажиллаж байна</span>
+</div>
+</div>
 
-        <!-- Навигацийн хэсэг -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <!-- Chatbot -->
-            <a href="https://docs.google.com/spreadsheets/d/1bJLi0cucLA0E3Nxm-4m6lTf1r0IImbkHYgttDRtSaBA/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-                <h3 class="text-white font-bold text-lg">Chatbot Data</h3>
-                <span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
-            </a>
+<!-- Навигацийн хэсэг -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<!-- Chatbot -->
+<a href="https://docs.google.com/spreadsheets/d/1bJLi0cucLA0E3Nxm-4m6lTf1r0IImbkHYgttDRtSaBA/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
+<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
+<h3 class="text-white font-bold text-lg">Chatbot Data</h3>
+<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+</a>
 
-            <!-- 8811 Loan -->
-            <a href="https://docs.google.com/spreadsheets/d/1qizDk5CnaaMTFyfFfmRc8VXkAZLgzOfSHh8LZikDqL4/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📞</div>
-                <h3 class="text-white font-bold text-lg">8811 Loan Request</h3>
-                <span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
-            </a>
+<!-- 8811 Loan -->
+<a href="https://docs.google.com/spreadsheets/d/1qizDk5CnaaMTFyfFfmRc8VXkAZLgzOfSHh8LZikDqL4/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
+<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📞</div>
+<h3 class="text-white font-bold text-lg">8811 Loan Request</h3>
+<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+</a>
 
-            <!-- Auto Loan -->
-            <a href="https://docs.google.com/spreadsheets/d/127CFkTKB85s1VfPiTu6Qx5iKWRnNF0DYkeie-fWbcAc/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🚘</div>
-                <h3 class="text-white font-bold text-lg">Auto Loan</h3>
-                <span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
-            </a>
-        </div>
+<!-- Auto Loan -->
+<a href="https://docs.google.com/spreadsheets/d/127CFkTKB85s1VfPiTu6Qx5iKWRnNF0DYkeie-fWbcAc/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
+<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🚘</div>
+<h3 class="text-white font-bold text-lg">Auto Loan</h3>
+<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+</a>
 
-        <!-- Үндсэн статистик самбар -->
-        <div class="premium-card p-8 md:p-12" id="mainPanel">
-            <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
-                <div>
-                    <h2 class="text-3xl font-black text-slate-800 tracking-tight mb-2">Үйл ажиллагааны статистик</h2>
-                    <p class="text-slate-400 font-medium text-sm">Сүүлд шинэчлэгдсэн: <span id="lastUpdateTime" class="text-blue-600 font-bold">...</span></p>
-                </div>
-                <div class="bg-blue-50 border border-blue-100 px-8 py-5 rounded-3xl text-right">
-                    <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Нийт бүртгэл</p>
-                    <p id="totalNumber" class="text-4xl font-black text-blue-700">0</p>
-                </div>
-            </div>
+<!-- OneCall -->
+<a href="https://docs.google.com/spreadsheets/d/1QET6vwmn_JVcF07r5dv3avfngOLFALpa1zCKYZtGkLk/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
+<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">☎️</div>
+<h3 class="text-white font-bold text-lg">OneCall</h3>
+<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+</a>
+</div>
 
-            <!-- График дүрслэл -->
-            <div class="bg-white rounded-3xl p-6 border border-slate-50 min-h-[400px]">
-                <canvas id="mainChart"></canvas>
-            </div>
+<!-- Үндсэн статистик самбар -->
+<div class="premium-card p-8 md:p-12" id="mainPanel">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
+<div>
+<h2 class="text-3xl font-black text-slate-800 tracking-tight mb-2">Үйл ажиллагааны статистик</h2>
+<p class="text-slate-400 font-medium text-sm">Сүүлд шинэчлэгдсэн: <span id="lastUpdateTime" class="text-blue-600 font-bold">...</span></p>
+</div>
+<div class="bg-blue-50 border border-blue-100 px-8 py-5 rounded-3xl text-right">
+<p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Нийт бүртгэл</p>
+<p id="totalNumber" class="text-4xl font-black text-blue-700">0</p>
+</div>
+</div>
 
-            <!-- Алдааны мэдэгдэл -->
-            <div id="errorBox" class="hidden mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-xs font-bold text-center">
-                ⚠️ Мэдээлэл ачаалахад алдаа гарлаа. Google Sheets-ийн "Publish to Web" тохиргоог шалгана уу.
-            </div>
-        </div>
+<!-- График дүрслэл -->
+<div class="bg-white rounded-3xl p-6 border border-slate-50 min-h-[400px]">
+<canvas id="mainChart"></canvas>
+</div>
 
-        <!-- Доод хэсэг -->
-        <div class="mt-8 text-center">
-            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 Evolution Holding - Бүх эрх хуулиар хамгаалагдсан</p>
-        </div>
-    </div>
+<!-- Алдааны мэдэгдэл -->
+<div id="errorBox" class="hidden mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-xs font-bold text-center">
+⚠️ Мэдээлэл ачаалахад алдаа гарлаа. Google Sheets-ийн "Publish to Web" тохиргоог шалгана уу.
+</div>
+</div>
 
-    <script>
-        // Google Sheets-ийн эх сурвалжууд
-        const SOURCE_CONFIG = [
-            { 
-                id: 'chatbot',
-                name: 'Chatbot', 
-                url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgJoNNkRhBjKalCwO8tyGr5Gs8Ic1H0oIpS-YbPWuOYfK8m5eLZUJnzyzcejgTREJID4-JP12KYfWz/pub?output=csv' 
-            },
-            { 
-                id: 'loan8811',
-                name: '8811 Loan', 
-                url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1qflcTKeKv06_d25N3xbZ6p6B3mdbG_wAqemYZMhVvEA7su2D4Vek0rUgy1g5wKbs6bpgkev8smVX/pub?output=csv' 
-            },
-            { 
-                id: 'carloan',
-                name: 'Auto Loan', 
-                url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCgVvCagIShX6K2g1VyzgTd4As0MxnK59laLkazTTamFUDgkHzesqGxK_gYyCcpB_L0W_gfFkMX5J/pub?output=csv' 
-            }
-        ];
+<!-- Доод хэсэг -->
+<div class="mt-8 text-center">
+<p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 Evolution Holding - Бүх эрх хуулиар хамгаалагдсан</p>
+</div>
+</div>
 
-        let myChart = null;
+<script>
+// Google Sheets-ийн эх сурвалжууд
+const SOURCE_CONFIG = [
+{
+id: 'chatbot',
+name: 'Chatbot',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgJoNNkRhBjKalCwO8tyGr5Gs8Ic1H0oIpS-YbPWuOYfK8m5eLZUJnzyzcejgTREJID4-JP12KYfWz/pub?output=csv'
+},
+{
+id: 'loan8811',
+name: '8811 Loan',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1qflcTKeKv06_d25N3xbZ6p6B3mdbG_wAqemYZMhVvEA7su2D4Vek0rUgy1g5wKbs6bpgkev8smVX/pub?output=csv'
+},
+{
+id: 'carloan',
+name: 'Auto Loan',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCgVvCagIShX6K2g1VyzgTd4As0MxnK59laLkazTTamFUDgkHzesqGxK_gYyCcpB_L0W_gfFkMX5J/pub?output=csv'
+},
+{
+id: 'onecall',
+name: 'OneCall',
+url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSf7ogXapqMVP8pPpidgVbGJuuSTZHqUnZQEGCoWo1bj681RxNZbfO93t2KI_918TZfx_7J_ef29xbu/pub?output=csv'
+}
+];
 
-        // Өгөгдөл татах функц
-        async function fetchSheetRows(source) {
-            try {
-                const response = await fetch(`${source.url}&t=${Date.now()}`, {
-                    method: 'GET',
-                    headers: { 'Accept': 'text/csv' }
-                });
-                
-                if (!response.ok) throw new Error(`Status: ${response.status}`);
-                
-                const csvData = await response.text();
-                if (!csvData || csvData.length < 5) throw new Error("Дата алдаатай байна");
+let myChart = null;
 
-                const rows = csvData.split(/\r?\n/).filter(row => row.trim().length > 0);
-                return Math.max(0, rows.length - 1);
-            } catch (e) {
-                console.error(`[АЛДАА] ${source.name}:`, e.message);
-                return -1; 
-            }
-        }
+// Өгөгдөл татах функц
+async function fetchSheetRows(source) {
+try {
+const response = await fetch(`${source.url}&t=${Date.now()}`, {
+method: 'GET',
+headers: { 'Accept': 'text/csv' }
+});
 
-        async function refreshDashboard() {
-            const counts = await Promise.all(SOURCE_CONFIG.map(s => fetchSheetRows(s)));
-            
-            const hasError = counts.some(c => c === -1);
-            const errorBox = document.getElementById('errorBox');
-            const mainPanel = document.getElementById('mainPanel');
-            const statusText = document.getElementById('statusText');
-            const statusDot = document.getElementById('statusDot');
+if (!response.ok) throw new Error(`Status: ${response.status}`);
 
-            if (hasError) {
-                errorBox.classList.remove('hidden');
-                mainPanel.classList.add('error-shake');
-                statusText.innerText = "Холболтын алдаа гарлаа";
-                statusDot.style.background = "#ef4444";
-            } else {
-                errorBox.classList.add('hidden');
-                mainPanel.classList.remove('error-shake');
-                statusText.innerText = "Систем хэвийн ажиллаж байна";
-                statusDot.style.background = "#22c55e";
-            }
+const csvData = await response.text();
+if (!csvData || csvData.length < 5) throw new Error("Дата алдаатай байна");
 
-            const validCounts = counts.map(c => (c === -1 ? 0 : c));
-            const total = validCounts.reduce((a, b) => a + b, 0);
+const rows = csvData.split(/\r?\n/).filter(row => row.trim().length > 0);
+return Math.max(0, rows.length - 1);
+} catch (e) {
+console.error(`[АЛДАА] ${source.name}:`, e.message);
+return -1;
+}
+}
 
-            document.getElementById('totalNumber').innerText = total.toLocaleString();
-            document.getElementById('lastUpdateTime').innerText = new Date().toLocaleTimeString('mn-MN');
+async function refreshDashboard() {
+const counts = await Promise.all(SOURCE_CONFIG.map(s => fetchSheetRows(s)));
 
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            if (myChart) myChart.destroy();
+const hasError = counts.some(c => c === -1);
+const errorBox = document.getElementById('errorBox');
+const mainPanel = document.getElementById('mainPanel');
+const statusText = document.getElementById('statusText');
+const statusDot = document.getElementById('statusDot');
 
-            myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: SOURCE_CONFIG.map(s => s.name),
-                    datasets: [{
-                        label: 'Хүсэлтийн тоо',
-                        data: validCounts,
-                        backgroundColor: counts.map(c => c === -1 ? '#ef4444' : '#007dba'),
-                        hoverBackgroundColor: '#006699',
-                        borderRadius: 16,
-                        barThickness: 'flex',
-                        maxBarThickness: 60
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1e293b',
-                            titleFont: { size: 14, weight: 'bold' },
-                            bodyFont: { size: 13 },
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: (context) => `Бүртгэгдсэн: ${context.raw}`
-                            }
-                        }
-                    },
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            grid: { color: '#f1f5f9' },
-                            ticks: { 
-                                stepSize: 1,
-                                font: { size: 11, weight: '600' },
-                                color: '#94a3b8'
-                            }
-                        },
-                        x: { 
-                            grid: { display: false }, 
-                            ticks: { 
-                                font: { size: 12, weight: 'bold' },
-                                color: '#475569'
-                            } 
-                        }
-                    }
-                }
-            });
-        }
+if (hasError) {
+errorBox.classList.remove('hidden');
+mainPanel.classList.add('error-shake');
+statusText.innerText = "Холболтын алдаа гарлаа";
+statusDot.style.background = "#ef4444";
+} else {
+errorBox.classList.add('hidden');
+mainPanel.classList.remove('error-shake');
+statusText.innerText = "Систем хэвийн ажиллаж байна";
+statusDot.style.background = "#22c55e";
+}
 
-        window.onload = () => {
-            refreshDashboard();
-            setInterval(refreshDashboard, 300000);
-        };
-    </script>
+const validCounts = counts.map(c => (c === -1 ? 0 : c));
+const total = validCounts.reduce((a, b) => a + b, 0);
+
+document.getElementById('totalNumber').innerText = total.toLocaleString();
+document.getElementById('lastUpdateTime').innerText = new Date().toLocaleTimeString('mn-MN');
+
+const ctx = document.getElementById('mainChart').getContext('2d');
+if (myChart) myChart.destroy();
+
+myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: SOURCE_CONFIG.map(s => s.name),
+datasets: [{
+label: 'Хүсэлтийн тоо',
+data: validCounts,
+backgroundColor: counts.map(c => c === -1 ? '#ef4444' : '#007dba'),
+hoverBackgroundColor: '#006699',
+borderRadius: 16,
+barThickness: 'flex',
+maxBarThickness: 60
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { display: false },
+tooltip: {
+backgroundColor: '#1e293b',
+titleFont: { size: 14, weight: 'bold' },
+bodyFont: { size: 13 },
+padding: 12,
+displayColors: false,
+callbacks: {
+label: (context) => `Бүртгэгдсэн: ${context.raw}`
+}
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+grid: { color: '#f1f5f9' },
+ticks: {
+stepSize: 1,
+font: { size: 11, weight: '600' },
+color: '#94a3b8'
+}
+},
+x: {
+grid: { display: false },
+ticks: {
+font: { size: 12, weight: 'bold' },
+color: '#475569'
+}
+}
+}
+}
+});
+}
+
+window.onload = () => {
+refreshDashboard();
+setInterval(refreshDashboard, 300000);
+};
+</script>
 </body>
 </html>
