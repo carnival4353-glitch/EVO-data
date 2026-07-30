@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evolution Holding - Мэдээллийн Төв</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#007dba">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
@@ -88,7 +92,7 @@ border: 2px solid #ef4444 !important;
 <!-- Системийн толгой хэсэг -->
 <div class="flex justify-between items-center mb-12">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl">🚀</div>
+<img src="/icon-192.png" alt="Evolution Holding" class="w-10 h-10 rounded-xl shadow-sm">
 <div>
 <h1 class="font-extrabold text-2xl text-slate-800 tracking-tight">Evolution Holding</h1>
 <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">Data Management System</p>
@@ -101,33 +105,47 @@ border: 2px solid #ef4444 !important;
 </div>
 
 <!-- Навигацийн хэсэг -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
 <!-- Chatbot -->
-<a href="https://docs.google.com/spreadsheets/d/1bJLi0cucLA0E3Nxm-4m6lTf1r0IImbkHYgttDRtSaBA/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-<h3 class="text-white font-bold text-lg">Chatbot Data</h3>
-<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+<a href="https://docs.google.com/spreadsheets/d/1bJLi0cucLA0E3Nxm-4m6lTf1r0IImbkHYgttDRtSaBA/edit?usp=sharing" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">🤖</div>
+<h3 class="text-white font-bold text-sm text-center">Chatbot Data</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
 </a>
 
 <!-- 8811 Loan -->
-<a href="https://docs.google.com/spreadsheets/d/1qizDk5CnaaMTFyfFfmRc8VXkAZLgzOfSHh8LZikDqL4/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📞</div>
-<h3 class="text-white font-bold text-lg">8811 Loan Request</h3>
-<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+<a href="https://docs.google.com/spreadsheets/d/1qizDk5CnaaMTFyfFfmRc8VXkAZLgzOfSHh8LZikDqL4/edit?usp=sharing" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">📞</div>
+<h3 class="text-white font-bold text-sm text-center">8811 Loan Request</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
 </a>
 
 <!-- Auto Loan -->
-<a href="https://docs.google.com/spreadsheets/d/127CFkTKB85s1VfPiTu6Qx5iKWRnNF0DYkeie-fWbcAc/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🚘</div>
-<h3 class="text-white font-bold text-lg">Auto Loan</h3>
-<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+<a href="https://docs.google.com/spreadsheets/d/127CFkTKB85s1VfPiTu6Qx5iKWRnNF0DYkeie-fWbcAc/edit?usp=sharing" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">🚘</div>
+<h3 class="text-white font-bold text-sm text-center">Auto Loan</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
 </a>
 
 <!-- OneCall -->
-<a href="https://docs.google.com/spreadsheets/d/1QET6vwmn_JVcF07r5dv3avfngOLFALpa1zCKYZtGkLk/edit?usp=sharing" target="_blank" class="nav-card p-8 rounded-3xl flex flex-col items-center group">
-<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">☎️</div>
-<h3 class="text-white font-bold text-lg">OneCall</h3>
-<span class="text-blue-100/60 text-[10px] font-bold mt-2 uppercase tracking-widest">Google Sheets үзэх →</span>
+<a href="https://docs.google.com/spreadsheets/d/1QET6vwmn_JVcF07r5dv3avfngOLFALpa1zCKYZtGkLk/edit?usp=sharing" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">☎️</div>
+<h3 class="text-white font-bold text-sm text-center">OneCall</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
+</a>
+
+<!-- Япон машины судалгаа -->
+<a href="https://docs.google.com/spreadsheets/d/1HWOIcL5ARRUVV_JChvcoewDM1jyS-L4HIt0YtF_jens/edit?gid=1453981563#gid=1453981563" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">🇯🇵</div>
+<h3 class="text-white font-bold text-sm text-center">Япон машины судалгаа</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
+</a>
+
+<!-- Хятад машины судалгаа -->
+<a href="https://docs.google.com/spreadsheets/d/1HWOIcL5ARRUVV_JChvcoewDM1jyS-L4HIt0YtF_jens/edit?gid=345462536#gid=345462536" target="_blank" class="nav-card p-6 rounded-3xl flex flex-col items-center group">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">🇨🇳</div>
+<h3 class="text-white font-bold text-sm text-center">Хятад машины судалгаа</h3>
+<span class="text-blue-100/60 text-[9px] font-bold mt-2 uppercase tracking-widest text-center">Google Sheets →</span>
 </a>
 </div>
 
@@ -555,6 +573,10 @@ refreshDashboard();
 setInterval(refreshDashboard, 300000);
 initExportControls();
 document.getElementById('exportBtn').addEventListener('click', exportToExcel);
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('/sw.js').catch((e) => console.log('SW бүртгэл алдаа:', e));
+}
 };
 </script>
 </body>
