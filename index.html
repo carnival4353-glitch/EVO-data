@@ -149,18 +149,15 @@ border: 2px solid #ef4444 !important;
 </a>
 </div>
 
-<!-- Desktop дээр суулгах urialга (зөвхөн боломжтой үед харагдана) -->
-<div id="installBanner" class="hidden mb-8 bg-gradient-to-r from-blue-600 to-blue-500 rounded-3xl px-8 py-6 items-center justify-between gap-4 shadow-lg shadow-blue-200">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">📲</div>
-<div>
-<p class="text-white font-bold text-base">Энэ dashboard-ыг компьютертоо app шиг суулгах уу?</p>
-<p class="text-blue-100 text-xs font-medium mt-0.5">Ажлын дэлгэц дээрээ icon-той болж, browser нээхгүйгээр шууд ашиглах боломжтой</p>
-</div>
-</div>
-<button id="installBtn" class="flex-shrink-0 bg-white hover:bg-blue-50 text-blue-700 font-black text-xs uppercase tracking-wider px-6 py-3 rounded-2xl transition-colors whitespace-nowrap">
-Суулгах
+<!-- Desktop дээр суулгах (зөвхөн боломжтой үед харагдана) -->
+<div id="installBanner" class="hidden mb-8 premium-card p-8 md:p-12">
+<h2 class="text-2xl font-black text-slate-800 tracking-tight mb-2">Аппликейшн болгож суулгах</h2>
+<p class="text-slate-400 font-medium text-sm mb-6">Ажлын дэлгэц дээрээ icon-той болж, browser нээхгүйгээр шууд ашиглах боломжтой</p>
+<div class="flex justify-end">
+<button id="installBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors flex items-center gap-2">
+<span>📲</span> Суулгах
 </button>
+</div>
 </div>
 
 <!-- Үндсэн статистик самбар -->
@@ -582,18 +579,9 @@ btn.disabled = false;
 }
 }
 
-window.onload = () => {
-refreshDashboard();
-setInterval(refreshDashboard, 300000);
-initExportControls();
-document.getElementById('exportBtn').addEventListener('click', exportToExcel);
-
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('/sw.js').catch((e) => console.log('SW бүртгэл алдаа:', e));
-}
-};
-
 // ---------- Desktop дээр суулгах urialga ----------
+// ЧУХАЛ: энэ listener-ийг script ачаалагдмагц шууд бүртгэнэ (window.onload
+// дотор биш) — учир нь "beforeinstallprompt" эвент маш эрт шатаж болдог
 let deferredInstallPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const installBanner = document.getElementById('installBanner');
@@ -602,7 +590,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredInstallPrompt = e;
 installBanner.classList.remove('hidden');
-installBanner.classList.add('flex');
 });
 
 installBtn.addEventListener('click', async () => {
@@ -618,6 +605,17 @@ deferredInstallPrompt = null;
 window.addEventListener('appinstalled', () => {
 installBanner.classList.add('hidden');
 });
+
+window.onload = () => {
+refreshDashboard();
+setInterval(refreshDashboard, 300000);
+initExportControls();
+document.getElementById('exportBtn').addEventListener('click', exportToExcel);
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('/sw.js').catch((e) => console.log('SW бүртгэл алдаа:', e));
+}
+};
 </script>
 </body>
 </html>
